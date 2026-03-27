@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Editar Perfil</title>
+</head>
+<body>
+    <header>
+        {% include 'core/components/header.html' %}
+    </header>
+    <main class="main-form">
+        <h2>Editar perfil</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="form-registro editar-perfil">
+            {% csrf_token %}
+
+            <label>Usuario:<br>
+            <input type="text" name="username" value="{{ user.username }}"></label>
+
+            <label>Contraseña actual:<br>
+            <input type="password" name="password_actual" placeholder="Opcional"></label>
+            <label>Contraseña nueva:<br>
+            <input type="password" name="password" placeholder="Opcional"></label>
+
+            <label>Nombre:<br>
+            <input type="text" name="first_name" value="{{ user.first_name }}"></label>
+
+            <label>Apellido:<br>
+            <input type="text" name="last_name" value="{{ user.last_name }}"></label>
+
+            <label>Email:<br>
+            <input type="email" name="email" value="{{ user.email }}"></label>
+
+            <label>Teléfono:<br>
+            <input type="tel" name="telefono" value="{{ user.telefono }}"></label>
+
+            <label>Foto actual</label><br>
+            {% if user.foto %}
+                <img src="{{ user.foto.url }}" class="foto-perfil"><br>
+            {% else %}
+                <p>No tienes una foto de perfil.</p><br>
+            {% endif %}
+
+            <label>Nueva foto</label>
+            <input type="file" name="foto">
+
+            <button type="submit" class="link celeste">Guardar cambios</button>
+            {% if error %}
+                <p style="color:red;">{{ error }}</p>
+            {% endif %}
+        </form>
+            <a href="{% url 'usuarios:perfil' %}" class="link rojo">Cancelar</a>
+    </main>
+    <footer>
+        {% include 'core/components/footer.html' %}
+    </footer>
+</body>
+</html>

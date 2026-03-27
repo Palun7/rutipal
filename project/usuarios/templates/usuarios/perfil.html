@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Perfil</title>
+</head>
+<body>
+    <header>
+        {% include 'core/components/header.html' %}
+    </header>
+    <main class="main-perfil">
+        <h2>
+            {{ usuario.username }}.
+        </h2>
+        {% if usuario.foto %}
+            <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.username }}" class="foto-perfil">
+        {% endif %}
+        <a href="{% url 'usuarios:editar-perfil' %}" class="link verde">Editar Datos</a>
+    </main>
+    <footer>
+        {% include 'core/components/footer.html' %}
+    </footer>
+</body>
+</html>

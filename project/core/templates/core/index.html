@@ -1,0 +1,39 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Rutipal</title>
+</head>
+<body>
+    <header>
+        {% include 'core/components/header.html' %}
+    </header>
+    <main class="main-index">
+        <div class="titulo-index">
+            <h1>Bienvenido a Rutipal</h1>
+            <p>Este es un simple ejemplo de página web con Django.</p>
+        </div>
+        <div class="imagen-rutipal">
+            {% if user.is_alumno %}
+                <a href="{% url 'rutinas:rutinas' %}">
+                    <img src="{% static 'img/rutipal.png' %}" alt="Imagen de Rutipal" class="img-rutipal" title="Mis Rutinas">
+                </a>
+            {% elif user.is_profesor %}
+                <a href="#">
+                    <img src="{% static 'img/rutipal.png' %}" alt="Imagen de Rutipal" class="img-rutipal" title="Crear Rutina">
+                </a>
+            {% else %}
+                <a href="{% url 'usuarios:login' %}">
+                    <img src="{% static 'img/rutipal.png' %}" alt="Imagen de Rutipal" class="img-rutipal" title="Iniciar Sesión">
+                </a>
+            {% endif %}
+        </div>
+    </main>
+    <footer>
+        {% include 'core/components/footer.html' %}
+    </footer>
+</body>
+</html>
