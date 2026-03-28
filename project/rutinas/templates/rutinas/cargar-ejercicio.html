@@ -1,0 +1,32 @@
+{% extends 'core/components/base.html' %}
+{% load static %}
+
+{% block title %}
+    Cargar Ejercicio
+{% endblock title %}
+
+{% block content %}
+    <main class="main-rutinas">
+        <h2>Cargar Ejercicio</h2>
+            <form method="POST" class="form-rutina" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <input type="text" name="nombre" id="nombre" placeholder="Nombre del Ejercicio">
+
+                <input type="text" name="musculo" id="musculo" placeholder="Musculo a trabajar">
+
+                <textarea name="descripcion" id="descripcion" placeholder="Descripción del Ejercicio"></textarea>
+
+                <label for="imagen">Imagen del Ejercicio:</label>
+                <input type="file" name="imagen" id="imagen" placeholder="Imagen del Ejercicio">
+
+                <input type="url" name="url" id="url" placeholder="URL del video del Ejercicio">
+
+                <button type="submit" class="link verde">Cargar Ejercicio</button>
+                {% if error %}
+                    <p style="color:red;">{{ error }}</p>
+                {% endif %}
+            </form>
+            <button class="link rojo" onclick="window.history.back();">Volver</button>
+    </main>
+{% endblock content %}

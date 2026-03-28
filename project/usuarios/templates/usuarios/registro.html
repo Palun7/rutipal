@@ -1,16 +1,11 @@
+{% extends 'core/components/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Crear Usuario</title>
-</head>
-<body>
-    <header>
-        {% include 'core/components/header.html' %}
-    </header>
+
+{% block title %}
+    Registro
+{% endblock title %}
+
+{% block content %}
     <main class="main-form">
         <h2>Registro</h2>
 
@@ -22,6 +17,7 @@
             <input type="password" name="confirm_password" placeholder="Confirmar Contraseña">
             <input type="text" name="apellido" placeholder="Apellido">
             <input type="text" name="nombre" placeholder="Nombre">
+            <input type="number" name="dni" placeholder="DNI">
             <input type="email" name="email" placeholder="Correo Electrónico">
             <input type="tel" name="telefono" placeholder="Teléfono">
             <input type="file" name="foto">
@@ -33,8 +29,4 @@
         </form>
         <a href="{% url 'usuarios:login' %}" class="link">Ya tengo cuenta</a> 
     </main>
-    <footer>
-        {% include 'core/components/footer.html' %}
-    </footer>
-</body>
-</html>
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% extends 'core/components/base.html' %}
+{% load static %}
+
+{% block title %}
+    Crear Rutina
+{% endblock title %}
+
+{% block content %}
+    <main class="main-rutinas">
+        <h2>Nueva Rutina</h2>
+            <form method="POST" class="form-rutina">
+                {% csrf_token %}
+
+                <select name="usuario" id="usuario">
+                    <option value="">Usuario</option>
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.id }}">{{ usuario.username }} {{ usuario.dni }}</option>
+                    {% endfor %}
+                </select>
+
+                <input type="text" name="mes" id="mes" placeholder="Mes">
+
+                <input type="text" name="dia" id="dia" placeholder="Día">
+
+                <label for="ejercicio">Ejercicios:</label>
+                <select name="ejercicio" id="ejercicio">
+                    {% for ejercicio in ejercicios %}
+                        <option value="{{ ejercicio.id }}">{{ ejercicio.nombre }} {{ ejercicio.musculo }}</option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit" class="link verde">Crear Rutina</button>
+                {% if error %}
+                    <p style="color:red;">{{ error }}</p>
+                {% endif %}
+            </form>
+            <button class="link rojo" onclick="window.history.back();">Volver</button>
+    </main>
+{% endblock content %}

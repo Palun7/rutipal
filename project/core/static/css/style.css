@@ -39,6 +39,19 @@ body {
     }
 }
 
+.main-rutinas {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 2vw;
+    h2 {
+        align-self: center;
+        margin: 5vh 0;
+        text-decoration: underline;
+    }
+}
+
 .main-form {
     flex-grow: 1;
     display: flex;
@@ -50,7 +63,6 @@ body {
         margin: 5vh 0;
         text-decoration: underline;
     }
-
 }
 
 .main-perfil {
@@ -68,14 +80,22 @@ body {
 
 .titulo-index {
     height: 70vh;
+    width: 30vw;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .img-rutipal {
+    position: relative;
     height: 70vh;
     border-radius: 10px;
+    box-shadow: 0 0 0 transparent;
+    transition-duration: .5s;
+}
+
+.img-rutipal:hover {
+    box-shadow: 0px 0px 10px var(--negro);
 }
 
 header {
@@ -115,6 +135,7 @@ header {
     margin: 0 10px;
     transition-duration: .5s;
     text-decoration: none;
+    text-align: center;
     color: var(--gris-oscuro);
 }
 
@@ -163,11 +184,11 @@ h2 {
     text-decoration: underline;
 }
 
-.form-login, .form-registro {
+.form-login, .form-registro, .form-rutina  {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2vh 0;
+    gap: 2vh;
     input {
         margin: 5px 0;
         border: .5px solid var(--negro);
@@ -225,4 +246,13 @@ h2 {
 
 .foto-perfil:hover {
     width: 120px;
+}
+
+.links-rutinas {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    a {
+        text-align: center;
+    }
 }

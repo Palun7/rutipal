@@ -1,0 +1,16 @@
+{% extends 'core/components/base.html' %}
+{% load static %}
+
+{% block title %}
+    Centro de Rutinas
+{% endblock title %}
+
+{% block content %}
+    <main class="main-rutinas">
+        <h2>Centro de Rutinas</h2>
+        <div class="links-rutinas">
+            <a href="{% url 'rutinas:cargar-ejercicio' %}" class="link verde">Cargar Ejercicio</a>
+            <a href="{% url 'rutinas:crear-rutina' %}" class="link verde">Crear Rutina</a>
+        </div>
+    </main>
+{% endblock content %}

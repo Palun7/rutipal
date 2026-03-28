@@ -11,7 +11,7 @@
             <li><a class="link" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
             <li><a class="link rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
             {% elif user.is_profesor %}
-            <li><a class="link" href="#">Rutinas</a></li>
+            <li><a class="link" href="{% url 'rutinas:centro-rutinas' %}">Profes</a></li>
             <li><a class="link" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
             <li><a class="link rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
         {% else %}

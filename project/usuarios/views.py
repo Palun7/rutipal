@@ -28,6 +28,7 @@ def registro_view(request):
         password = request.POST['password']
         nombre = request.POST['nombre']
         apellido = request.POST['apellido']
+        dni = request.POST['dni']
         email = request.POST['email']
         telefono = request.POST['telefono']
         foto = request.FILES.get('foto')
@@ -43,6 +44,7 @@ def registro_view(request):
             password=password,
             first_name=nombre,
             last_name=apellido,
+            dni=dni,
             email=email,
             telefono=telefono,
             foto=foto,
@@ -72,6 +74,7 @@ def editar_perfil(request):
         user.email = request.POST.get('email')
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
+        user.dni = request.POST.get('dni')
         user.telefono = request.POST.get('telefono')
         password_actual = request.POST.get('password_actual')
         password = request.POST.get('password')
