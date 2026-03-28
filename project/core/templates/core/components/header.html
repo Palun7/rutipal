@@ -1,18 +1,25 @@
 <nav>
     <ul class="menu">
-        {% if user.foto %}
-            <div class="foto-nav">
-                <img src="{{ user.foto.url }}">
-            </div>
-        {% endif %}
         <li><a class="link" href="{% url 'core:index' %}">Inicio</a></li>
         {%if user.is_alumno%}
             <li><a class="link" href="{% url 'rutinas:rutinas' %}">Mi Rutina</a></li>
-            <li><a class="link" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
+            {% if user.foto %}
+                <div class="foto-nav">
+                    <a href="{% url 'usuarios:perfil' %}" title="Perfil"><img src="{{ user.foto.url }}"></a>
+                </div>
+            {% else %}
+                <li><a class="link" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
+            {% endif %}
             <li><a class="link rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
             {% elif user.is_profesor %}
-            <li><a class="link" href="{% url 'rutinas:centro-rutinas' %}">Profes</a></li>
-            <li><a class="link" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
+            <li><a class="link" href="{% url 'rutinas:centro-rutinas' %}">Profe</a></li>
+            {% if user.foto %}
+                <div class="foto-nav">
+                    <a href="{% url 'usuarios:perfil' %}" title="Perfil"><img src="{{ user.foto.url }}"></a>
+                </div>
+            {% else %}
+                <li><a class="link" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
+            {% endif %}
             <li><a class="link rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
         {% else %}
             <li><a class="link" href="{% url 'usuarios:login' %}">Iniciar Sesión</a></li>

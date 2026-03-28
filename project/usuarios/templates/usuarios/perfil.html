@@ -7,12 +7,40 @@
 
 {% block content %}
     <main class="main-perfil">
-        <h2>
-            {{ usuario.username }}.
-        </h2>
-        {% if usuario.foto %}
-            <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.username }}" class="foto-perfil">
-        {% endif %}
-        <a href="{% url 'usuarios:editar-perfil' %}" class="link verde">Editar Datos</a>
+        <div class="datos">
+            <h2>
+                {{ usuario.username }}
+            </h2>
+            <div class="detalle-datos">
+                <p>Nombre: {{ usuario.first_name }} {{ usuario.last_name }}</p>
+                <p>DNI: {{ usuario.dni }}</p>
+                <p>Mail: {{ usuario.email }}</p>
+                <p>Teléfono: {{ usuario.telefono }}</p>
+            </div>
+            {% if usuario.foto %}
+                <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.username }}" class="foto-perfil">
+            {% endif %}
+            <a href="{% url 'usuarios:editar-perfil' %}" class="link verde">Editar Datos</a>
+        </div>
+        <div class="mis-rutinas">
+            {% if user.is_alumno %}
+                <h3>Mis Rutinas</h3>
+                {% if rutinas %}
+                    <ul>
+                        {% for rutina in rutinas %}
+                            <li><p>{{ rutina.mes }}</p></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No tienes rutinas asignadas.</p>
+                {% endif %}
+            {% elif user.is_profesor %}
+                <h2>Centro de Rutinas</h2>
+                <div class="links-rutinas">
+                    <a href="{% url 'rutinas:cargar-ejercicio' %}" class="link verde">Cargar Ejercicio</a>
+                    <a href="{% url 'rutinas:crear-rutina' %}" class="link verde">Crear Rutina</a>
+                </div>
+            {% endif %}
+        </div>
     </main>
 {% endblock content %}

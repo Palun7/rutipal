@@ -7,6 +7,36 @@
 
 {% block content %}
     <main class="main-rutinas">
-        <h1>Rutina de {{ usuario.username }}</h1>
+        <h2>Rutinas de {{ usuario.username }}</h2>
+        {% if rutinas_por_mes %}
+            {% for mes, rutinas in rutinas_por_mes.items %}
+
+                <h2>{{ mes }}</h2>
+
+                {% for rutina in rutinas %}
+                    <h3>Día {{ rutina.dia }}:</h3>
+
+                    <ul>
+                        {% for ejercicio in rutina.ejercicio.all %}
+                            <li>
+                                {% for ejercicio in ejercicios %}
+                                    <h4>{{ ejercicio.nombre }}</h4>
+
+                                    <input type="checkbox" name="ejercicio" value="{{ ejercicio.id }}">
+
+                                    <input type="number" name="peso_{{ ejercicio.id }}" placeholder="Peso">
+                                    <input type="number" name="reps_{{ ejercicio.id }}" placeholder="Reps">
+                                    <input type="number" name="series_{{ ejercicio.id }}" placeholder="Series">
+                                {% endfor %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                {% endfor %}
+
+            {% endfor %}
+        {% else %}
+            <p>No tienes rutinas asignadas.</p>
+        {% endif %}
     </main>
 {% endblock content %}

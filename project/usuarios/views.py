@@ -26,6 +26,7 @@ def registro_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+        password_confirm = request.POST['confirm_password']
         nombre = request.POST['nombre']
         apellido = request.POST['apellido']
         dni = request.POST['dni']

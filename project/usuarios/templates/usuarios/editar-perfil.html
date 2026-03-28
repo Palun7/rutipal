@@ -16,9 +16,10 @@
             <input type="text" name="username" value="{{ user.username }}"></label>
 
             <label>Contraseña actual:<br>
-            <input type="password" name="password_actual" placeholder="Opcional"></label>
+            <input type="password" name="password_actual" placeholder="Opcional" id="password"></label>
+            <p id="password-error" style="color: red;"></p>
             <label>Contraseña nueva:<br>
-            <input type="password" name="password" placeholder="Opcional"></label>
+            <input type="password" name="password" placeholder="Opcional" id="confirm_password"></label>
 
             <label>Nombre:<br>
             <input type="text" name="first_name" value="{{ user.first_name }}"></label>
@@ -53,3 +54,7 @@
             <a href="{% url 'usuarios:perfil' %}" class="link rojo">Cancelar</a>
     </main>
 {% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'usuarios/registro.js' %}"></script>
+{% endblock scripts %}

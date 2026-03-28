@@ -13,8 +13,9 @@
             {% csrf_token %}
 
             <input type="text" name="username" placeholder="Nombre de Usuario">
-            <input type="password" name="password" placeholder="Contraseña">
-            <input type="password" name="confirm_password" placeholder="Confirmar Contraseña">
+            <input type="password" name="password" placeholder="Contraseña" id="password">
+            <p id="password-error" style="color: red;"></p>
+            <input type="password" name="confirm_password" placeholder="Confirmar Contraseña" id="confirm_password">
             <input type="text" name="apellido" placeholder="Apellido">
             <input type="text" name="nombre" placeholder="Nombre">
             <input type="number" name="dni" placeholder="DNI">
@@ -30,3 +31,7 @@
         <a href="{% url 'usuarios:login' %}" class="link">Ya tengo cuenta</a> 
     </main>
 {% endblock content %}
+
+{% block scripts %}
+    <script src="{% static 'usuarios/registro.js' %}"></script>
+{% endblock scripts %}

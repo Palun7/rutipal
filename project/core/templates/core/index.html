@@ -17,7 +17,7 @@
                     <img src="{% static 'img/rutipal.png' %}" alt="Imagen de Rutipal" class="img-rutipal" title="Mis Rutinas">
                 </a>
             {% elif user.is_profesor %}
-                <a href="{% url 'rutinas:crear-rutinas' %}">
+                <a href="{% url 'rutinas:crear-rutina' %}">
                     <img src="{% static 'img/rutipal.png' %}" alt="Imagen de Rutipal" class="img-rutipal" title="Crear Rutina">
                 </a>
             {% else %}
