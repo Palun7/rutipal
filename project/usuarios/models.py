@@ -18,5 +18,9 @@ class Usuario(AbstractUser):
     def is_alumno(self):
         return self.tipo_usuario == 'alumno'
 
+    class Meta:
+        verbose_name = "Usuario"
+        verbose_name_plural = "Usuarios"
+
     def __str__(self):
         return self.username

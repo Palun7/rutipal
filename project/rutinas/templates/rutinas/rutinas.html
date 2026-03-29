@@ -8,35 +8,85 @@
 {% block content %}
     <main class="main-rutinas">
         <h2>Rutinas de {{ usuario.username }}</h2>
+
         {% if rutinas_por_mes %}
-            {% for mes, rutinas in rutinas_por_mes.items %}
+            <form method="POST" class="form-rutina">
+                {% csrf_token %}
 
-                <h2>{{ mes }}</h2>
+                {% for mes, rutinas in rutinas_por_mes.items %}
 
-                {% for rutina in rutinas %}
-                    <h3>Día {{ rutina.dia }}:</h3>
+                    <div class="mes-rutina">
+                        <h2>{{ mes }}</h2>
 
-                    <ul>
-                        {% for ejercicio in rutina.ejercicio.all %}
-                            <li>
-                                {% for ejercicio in ejercicios %}
-                                    <h4>{{ ejercicio.nombre }}</h4>
+                        {% for rutina in rutinas %}
+                            <div class="dia-rutina">
+                                <h3>Día {{ rutina.dia }}</h3>
 
-                                    <input type="checkbox" name="ejercicio" value="{{ ejercicio.id }}">
+                                <ul>
+                                    {% for r in rutina.ejercicios.all %}
+                                        <li>
+                                            <strong>{{ r.ejercicio.nombre }}</strong>
 
-                                    <input type="number" name="peso_{{ ejercicio.id }}" placeholder="Peso">
-                                    <input type="number" name="reps_{{ ejercicio.id }}" placeholder="Reps">
-                                    <input type="number" name="series_{{ ejercicio.id }}" placeholder="Series">
-                                {% endfor %}
-                            </li>
+                                            <input type="number" 
+                                                name="reps_{{ r.id }}" 
+                                                value="{{ r.repeticiones }}"
+                                                data-id="{{ r.id }}"
+                                                data-field="repeticiones"
+                                                class="auto-save">
+
+                                            <input type="number" 
+                                                name="series_{{ r.id }}" 
+                                                value="{{ r.series }}"
+                                                data-id="{{ r.id }}"
+                                                data-field="series"
+                                                class="auto-save">
+
+                                            <input type="number" 
+                                                name="peso_{{ r.id }}" 
+                                                value="{{ r.peso|floatformat:2 }}"
+                                                data-id="{{ r.id }}"
+                                                data-field="peso"
+                                                class="auto-save">
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         {% endfor %}
-                    </ul>
+                    </div>
 
                 {% endfor %}
 
-            {% endfor %}
+                <button type="submit" class="link verde">Guardar cambios</button>
+            </form>
         {% else %}
             <p>No tienes rutinas asignadas.</p>
         {% endif %}
     </main>
+    <script>
+    document.querySelectorAll('.auto-save').forEach(input => {
+        input.addEventListener('change', function() {
+
+            const id = this.dataset.id;
+            const field = this.dataset.field;
+            const value = this.value;
+
+            fetch("{% url 'rutinas:actualizar_ejercicio' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    id: id,
+                    field: field,
+                    value: value
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Guardado:", data);
+            });
+        });
+    });
+    </script>
 {% endblock content %}

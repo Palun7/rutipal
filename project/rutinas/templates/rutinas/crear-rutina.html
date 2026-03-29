@@ -11,25 +11,40 @@
             <form method="POST" class="form-rutina">
                 {% csrf_token %}
 
-                <select name="usuario" id="usuario">
+                <select name="usuario">
                     <option value="">Alumno</option>
                     {% for usuario in usuarios %}
-                        <option value="{{ usuario.id }}">{{ usuario.username }} {{ usuario.dni }}</option>
+                        <option value="{{ usuario.id }}">
+                            {{ usuario.username }} {{ usuario.dni }}
+                        </option>
                     {% endfor %}
                 </select>
 
-                <input type="text" name="mes" id="mes" placeholder="Mes">
+                <input type="text" name="mes" placeholder="Mes">
+                <input type="text" name="dia" placeholder="Día">
 
-                <input type="text" name="dia" id="dia" placeholder="Día">
+                <h3>Ejercicios</h3>
 
-                <label for="ejercicio">Ejercicios:</label>
-                <select name="ejercicio" id="ejercicio">
-                    {% for ejercicio in ejercicios %}
-                        <option value="{{ ejercicio.id }}">{{ ejercicio.nombre }} {{ ejercicio.musculo }}</option>
-                    {% endfor %}
-                </select>
+                {% for ejercicio in ejercicios %}
+                    <div class="form-ejercicios">
+
+                        <!-- checkbox para seleccionar -->
+                        <input type="checkbox" name="ejercicio" value="{{ ejercicio.id }}">
+
+                        <strong>{{ ejercicio.nombre }} ({{ ejercicio.musculo }})</strong>
+
+                        <br>
+
+                        <!-- inputs asociados a ese ejercicio -->
+                        <input type="number" name="peso_{{ ejercicio.id }}" placeholder="Peso">
+                        <input type="number" name="reps_{{ ejercicio.id }}" placeholder="Reps">
+                        <input type="number" name="series_{{ ejercicio.id }}" placeholder="Series">
+
+                    </div>
+                {% endfor %}
 
                 <button type="submit" class="link verde">Crear Rutina</button>
+
                 {% if error %}
                     <p style="color:red;">{{ error }}</p>
                 {% endif %}

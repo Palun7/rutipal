@@ -28,7 +28,7 @@
                 {% if rutinas %}
                     <ul>
                         {% for rutina in rutinas %}
-                            <li><p>{{ rutina.mes }}</p></li>
+                            <li><p>{{ rutina.mes }} {{ rutina.dia }}</p></li>
                         {% endfor %}
                     </ul>
                 {% else %}
