@@ -5,11 +5,13 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>500 💥</h1>
-    <h2>Error del servidor</h2>
-    <p>Algo salió mal. Estamos trabajando en eso.</p>
+    <div class="main index">
+        <h1>500 💥</h1>
+        <h2>Error del servidor</h2>
+        <p>Algo salió mal. Estamos trabajando en eso.</p>
 
-    <a href="{% url 'core:index' %}" class="link celeste">
-        Volver al inicio
-    </a>
+        <a href="{% url 'core:index' %}" class="link celeste">
+            Volver al inicio
+        </a>
+    </div>
 {% endblock content %}

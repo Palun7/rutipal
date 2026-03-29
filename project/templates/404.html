@@ -5,11 +5,13 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>404 😢</h1>
-    <h2>Página no encontrada</h2>
-    <p>La página que buscás no existe.</p>
+    <div class="main-index">
+        <h1>404 😢</h1>
+        <h2>Página no encontrada</h2>
+        <p>La página que buscás no existe.</p>
 
-    <a href="{% url 'core:index' %}" class="link celeste">
-        Volver al inicio
-    </a>
+        <a href="{% url 'core:index' %}" class="link celeste">
+            Volver al inicio
+        </a>
+    </div>
 {% endblock content %}
