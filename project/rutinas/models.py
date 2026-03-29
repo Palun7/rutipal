@@ -38,6 +38,7 @@ class RutinaEjercicio(models.Model):
     series = models.IntegerField(null=True, blank=True)
 
     class Meta:
+        unique_together = ('rutina', 'ejercicio')
         verbose_name = "Ejercicio en Rutina"
         verbose_name_plural = "Ejercicios en Rutina"
 

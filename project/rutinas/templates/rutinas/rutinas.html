@@ -10,59 +10,85 @@
         <h2>Rutinas de {{ usuario.username }}</h2>
 
         {% if rutinas_por_mes %}
-            <form method="POST" class="form-rutina">
+            <form method="POST" class="form-rutina-muestra">
                 {% csrf_token %}
 
                 {% for mes, rutinas in rutinas_por_mes.items %}
 
                     <div class="mes-rutina">
-                        <h2>{{ mes }}</h2>
+                        <h2 class="toggle-mes" data-id="mes-{{ forloop.counter }}">{{ mes }}</h2>
 
-                        {% for rutina in rutinas %}
-                            <div class="dia-rutina">
-                                <h3>Día {{ rutina.dia }}</h3>
+                        <div id="mes-{{ forloop.counter }}" class="contenido-mes" style="display: none;">
+                            {% for rutina in rutinas %}
+                                <div class="dia-rutina">
+                                    <h3 class="toggle-dia" data-id="dia-{{ rutina.id }}">Día {{ rutina.dia }}:</h3>
 
-                                <ul>
-                                    {% for r in rutina.ejercicios.all %}
-                                        <li>
-                                            <strong>{{ r.ejercicio.nombre }}</strong>
+                                    <div id="dia-{{ rutina.id }}" class="contenido-dia" style="display: none;">
+                                        <ul>
+                                            {% for r in rutina.ejercicios.all %}
+                                                <li class="ejercicio-completo">
+                                                    <strong class="toggle-ejercicio" data-id="ej-{{ r.id }}">
+                                                        {{ r.ejercicio.nombre }}:
+                                                    </strong>
+                                                    <div id="ej-{{ r.id }}" class="detalle-ejercicio" style="display: none;">
+                                                        <p><strong>Músculo:</strong> {{ r.ejercicio.musculo }}</p>
+                                                        <p><strong>Descripción:</strong> {{ r.ejercicio.descripcion }}</p>
 
-                                            <input type="number" 
-                                                name="reps_{{ r.id }}" 
-                                                value="{{ r.repeticiones }}"
-                                                data-id="{{ r.id }}"
-                                                data-field="repeticiones"
-                                                class="auto-save">
+                                                        {% if r.ejercicio.imagen %}
+                                                            <img src="{{ r.ejercicio.imagen.url }}" width="150">
+                                                        {% endif %}
 
-                                            <input type="number" 
-                                                name="series_{{ r.id }}" 
-                                                value="{{ r.series }}"
-                                                data-id="{{ r.id }}"
-                                                data-field="series"
-                                                class="auto-save">
+                                                        {% if r.ejercicio.url %}
+                                                            <p><a href="{{ r.ejercicio.url }}" target="_blank" class="link celeste">Ver ejemplo</a></p>
+                                                        {% endif %}
+                                                    </div>
 
-                                            <input type="number" 
-                                                name="peso_{{ r.id }}" 
-                                                value="{{ r.peso|floatformat:2 }}"
-                                                data-id="{{ r.id }}"
-                                                data-field="peso"
-                                                class="auto-save">
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endfor %}
+                                                    {% if user.is_alumno %}
+                                                        {{ r.repeticiones }} reps x {{ r.series }} series
+                                                    {% elif user.is_profesor %}
+                                                        <label><input type="number" 
+                                                            name="reps_{{ r.id }}" 
+                                                            value="{{ r.repeticiones }}"
+                                                            data-id="{{ r.id }}"
+                                                            data-field="repeticiones"
+                                                            class="auto-save"> reps. x </label>
+
+                                                        <label><input type="number" 
+                                                            name="series_{{ r.id }}" 
+                                                            value="{{ r.series }}"
+                                                            data-id="{{ r.id }}"
+                                                            data-field="series"
+                                                            class="auto-save"> series /</label>
+                                                    {% endif %}
+
+                                                    <label><input type="number" 
+                                                        step="0.5"
+                                                        name="peso_{{ r.id }}" 
+                                                        value="{{ r.peso|stringformat:'.1f' }}"
+                                                        data-id="{{ r.id }}"
+                                                        data-field="peso"
+                                                        class="auto-save"> Kg.</label>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
 
                 {% endfor %}
 
-                <button type="submit" class="link verde">Guardar cambios</button>
             </form>
         {% else %}
             <p>No tienes rutinas asignadas.</p>
         {% endif %}
     </main>
     <script>
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+
     document.querySelectorAll('.auto-save').forEach(input => {
         input.addEventListener('change', function() {
 
@@ -74,7 +100,7 @@
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRFToken": "{{ csrf_token }}"
+                    "X-CSRFToken": getCSRFToken()
                 },
                 body: JSON.stringify({
                     id: id,
@@ -86,6 +112,38 @@
             .then(data => {
                 console.log("Guardado:", data);
             });
+        });
+    });
+
+    document.querySelectorAll('.toggle-ejercicio').forEach(nombre => {
+        nombre.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const detalle = document.getElementById(id);
+
+            if (detalle.style.display === "none") {
+                detalle.style.display = "flex";
+            } else {
+                detalle.style.display = "none";
+            }
+        });
+    });
+    document.querySelectorAll('.toggle-mes').forEach(mes => {
+        mes.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const contenido = document.getElementById(id);
+
+            contenido.style.display = 
+                contenido.style.display === "none" ? "block" : "none";
+        });
+    });
+
+    document.querySelectorAll('.toggle-dia').forEach(dia => {
+        dia.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const contenido = document.getElementById(id);
+
+            contenido.style.display = 
+                contenido.style.display === "none" ? "block" : "none";
         });
     });
     </script>

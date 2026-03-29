@@ -12,6 +12,7 @@
                 {{ usuario.username }}
             </h2>
             <div class="detalle-datos">
+                <h5>Datos Personales:</h5>
                 <p>Nombre: {{ usuario.first_name }} {{ usuario.last_name }}</p>
                 <p>DNI: {{ usuario.dni }}</p>
                 <p>Mail: {{ usuario.email }}</p>
@@ -24,7 +25,7 @@
         </div>
         <div class="mis-rutinas">
             {% if user.is_alumno %}
-                <h3>Mis Rutinas</h3>
+                <h3><a href="{% url 'rutinas:rutinas' %}" class="link celeste">Mis Rutinas</a></h3>
                 {% if rutinas %}
                     <ul>
                         {% for rutina in rutinas %}
@@ -35,10 +36,12 @@
                     <p>No tienes rutinas asignadas.</p>
                 {% endif %}
             {% elif user.is_profesor %}
-                <h2>Centro de Rutinas</h2>
+                <h3 class="h3-profesor">Centro de Rutinas</h3>
                 <div class="links-rutinas">
                     <a href="{% url 'rutinas:cargar-ejercicio' %}" class="link verde">Cargar Ejercicio</a>
                     <a href="{% url 'rutinas:crear-rutina' %}" class="link verde">Crear Rutina</a>
+                    <a href="{% url 'rutinas:ver-rutinas' %}" class="link celeste">Ver rutinas</a>
+                    <a href="{% url 'rutinas:rutinas' %}" class="link celeste">Mi Rutina</a>
                 </div>
             {% endif %}
         </div>

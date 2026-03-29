@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from usuarios.models import Usuario
 from .models import Ejercicio, DiaRutina, RutinaEjercicio
@@ -137,3 +137,80 @@ def actualizar_ejercicio(request):
         r.save()
 
         return JsonResponse({'status': 'ok'})
+
+@login_required
+def rutinas_profesor(request):
+    if request.user != Usuario.objects.filter(tipo_usuario='profesor').first():
+        return redirect('rutinas:rutinas')
+
+    usuarios = Usuario.objects.all().prefetch_related(
+        'diarutina_set__ejercicios__ejercicio'
+    )
+
+    return render(request, 'rutinas/ver-rutinas.html', {
+        'usuarios': usuarios
+    })
+
+@login_required
+def editar_rutina(request, rutina_id):
+    rutina = get_object_or_404(DiaRutina, id=rutina_id)
+
+    if request.user != Usuario.objects.filter(tipo_usuario='profesor').first():
+        return redirect('rutinas:rutinas')
+
+    if request.method == "POST" and 'agregar' in request.POST:
+        ejercicio_id = request.POST.get('ejercicio_id')
+        reps = request.POST.get('reps') or None
+        series = request.POST.get('series') or None
+        peso = request.POST.get('peso') or None
+
+        obj, creado = RutinaEjercicio.objects.get_or_create(
+            rutina=rutina,
+            ejercicio_id=ejercicio_id,
+            defaults={
+                'repeticiones': reps,
+                'series': series,
+                'peso': peso
+            }
+        )
+
+        if not creado:
+            obj.repeticiones = reps
+            obj.series = series
+            obj.peso = peso
+            obj.save()
+
+    ejercicios = rutina.ejercicios.all()# type: ignore
+    todos_ejercicios = Ejercicio.objects.all()
+
+    return render(request, 'rutinas/editar-rutina.html', {
+        'rutina': rutina,
+        'ejercicios': ejercicios,
+        'todos_ejercicios': todos_ejercicios
+    })
+
+@login_required
+def eliminar_rutina(request, rutina_id):
+    rutina = get_object_or_404(DiaRutina, id=rutina_id)
+
+    if request.user != Usuario.objects.filter(tipo_usuario='profesor').first():
+
+        return redirect('rutinas:rutinas')
+
+    if request.method == "POST":
+        rutina.delete()
+
+    return redirect('rutinas:ver-rutinas')
+
+@login_required
+def eliminar_ejercicio(request, ejercicio_id):
+    if request.user != Usuario.objects.filter(tipo_usuario='profesor').first():
+
+        return JsonResponse({'error': 'No autorizado'}, status=403)
+
+    if request.method == "POST":
+        r = get_object_or_404(RutinaEjercicio, id=ejercicio_id)
+        r.delete()
+        return JsonResponse({'status': 'ok'})
+
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
