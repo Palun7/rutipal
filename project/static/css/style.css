@@ -41,6 +41,10 @@ body {
         margin: 5vh 0;
         text-decoration: underline;
     }
+    @media (max-width: 500px) {
+        flex-direction: column;
+        gap: 50px;
+    }
 }
 
 .main-rutinas {
@@ -54,6 +58,12 @@ body {
         align-self: center;
         margin: 5vh 0;
         text-decoration: underline;
+    }
+    @media (max-width: 500px) {
+        overflow: auto;
+        width: 100vw;
+        align-items: center;
+        margin-left: 0;
     }
 }
 
@@ -114,12 +124,25 @@ body {
         flex-direction: column;
         align-items: center;
         h3 {
+            width: fit-content;
             align-self: center;
             margin-bottom: 1vh;
         }
         .h3-profesor {
             font-size: 1.5em;
             text-decoration: underline;
+        }
+        @media (max-width: 500px) {
+            width: fit-content;
+        }
+    }
+    @media (max-width: 500px) {
+        flex-direction: column;
+        .datos {
+            height: fit-content;
+            margin-bottom: 2vh;
+            padding-bottom: 1vh;
+            border-bottom: 1px solid var(--negro);
         }
     }
 }
@@ -130,6 +153,25 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    @media (max-width: 500px) {
+        align-items: center;
+        height: fit-content;
+        width: 95%;
+        h1, h3, p {
+            margin-bottom: 2vh;
+            text-align: center;
+        }
+        h3 {
+            text-decoration: underline;
+        }
+        p {
+            color: var(--gris-oscuro);
+            background-color: var(--gris);
+            padding: 5px 1px;
+            border-radius: 5px;
+            border: .5px solid var(--negro);
+        }
+    }
 }
 
 .img-rutipal {
@@ -155,10 +197,16 @@ header {
 }
 
 .menu {
+    min-width: 100%;
+    max-width: fit-content;
+    height: fit-content;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     margin: 1vh 0;
+    li {
+        min-width: fit-content;
+    }
     .foto-nav {
         align-self: flex-start;
         img {
@@ -189,6 +237,9 @@ header {
     text-decoration: none;
     text-align: center;
     color: var(--gris-oscuro);
+    @media (max-width: 500px) {
+        margin: 0 5px;
+    }
 }
 
 .link:hover {
@@ -221,6 +272,8 @@ header {
 }
 
 footer {
+    position: sticky;
+    bottom: 0;
     width: 100%;
     background-color: var(--gris-oscuro);
     color: var(--blanco);
@@ -270,6 +323,10 @@ footer {
         padding: 2px 5px;
         border-radius: 5px;
     }
+    textarea {
+        border-radius: 5px;
+        padding: 2px 5px;
+    }
     button {
         padding: 3px 8px;
         background-color: var(--gris-claro);
@@ -315,9 +372,43 @@ footer {
         transition-duration: .2s;
         cursor: pointer;
     }
+    @media (max-width: 500px) {
+        width: 100%;
+    }
+}
+
+.li-ver-rutina {
+    input {
+        padding: 0 5px;
+    }
+}
+
+.form-rutina-editar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 98%;
+    background-color: var(--gris);
+    border-radius: 5px;
+    padding: 10px;
+    li {
+        list-style: none;
+    }
+    input {
+        padding: 2px 5px;
+    }
+}
+
+.usuario-bloque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .form-agregar-ejercicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     input {
         padding: 3px 5px;
     }
@@ -325,6 +416,10 @@ footer {
         padding: 2px 5px;
         border: .5px solid var(--negro);
         border-radius: 5px;
+    }
+    h3 {
+        margin-bottom: 10px;
+        text-decoration: underline;
     }
 }
 
@@ -360,6 +455,17 @@ footer {
         border-radius: 5px;
         box-shadow: 1px 1px 3px var(--negro);
     }
+    @media (max-width: 500px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.ejercicio-checkbox {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .foto-perfil {
@@ -411,6 +517,16 @@ footer {
         letter-spacing: 1.2px;
         text-decoration: underline;
     }
+    @media (max-width: 500px) {
+        width: 98vw;
+        padding: 0;
+    }
+}
+
+.contenido-mes {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
 }
 
 .dia-rutina {
@@ -432,6 +548,12 @@ footer {
     }
     input {
         width: 60px;
+    }
+    @media (max-width: 500px) {
+        width: 95vw;
+        justify-content: center;
+        margin: 0;
+        margin-bottom: 1vh;
     }
 }
 

@@ -13,7 +13,7 @@
         <div class="usuario-bloque">
 
             <h3 class="toggle-usuario" data-id="user-{{ usuario.id }}">
-                {{ usuario.username }}
+                {{ usuario.username }} {{ usuario.dni }}
             </h3>
 
             <div id="user-{{ usuario.id }}" style="display:none;" class="form-rutina-muestra">
@@ -38,8 +38,8 @@
 
                         <ul>
                             {% for r in rutina.ejercicios.all %}
-                                <li>
-                                    <strong>{{ r.ejercicio.nombre }}</strong>
+                                <li class="li-ver-rutina">
+                                    <strong>{{ r.ejercicio.nombre }}</strong><br>
 
                                     <label><input type="number"
                                         value="{{ r.repeticiones }}"
@@ -85,7 +85,7 @@
             const id = this.dataset.id;
             const div = document.getElementById(id);
 
-            div.style.display = div.style.display === "none" ? "block" : "none";
+            div.style.display = div.style.display === "none" ? "flex" : "none";
         });
     });
 
