@@ -1,0 +1,15 @@
+{% extends 'components/base.html' %}
+
+{% block title %}
+    No encontrado
+{% endblock title %}
+
+{% block content %}
+    <h1>404 😢</h1>
+    <h2>Página no encontrada</h2>
+    <p>La página que buscás no existe.</p>
+
+    <a href="{% url 'core:index' %}" class="link celeste">
+        Volver al inicio
+    </a>
+{% endblock content %}
