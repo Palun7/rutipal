@@ -595,6 +595,10 @@ footer {
 }
 
 .toggle-usuario {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
     width: fit-content;
     text-decoration: underline;
     font-size: 1.5em;
@@ -624,6 +628,16 @@ footer {
     background-color: var(--gris);
     padding: 2px 5px;
     border: .5px solid var(--negro);
+    border-radius: 5px;
+}
+
+.nombre-foto-usuario {
+    display: flex;
+    gap: 5px;
+}
+
+.foto-usuario {
+    width: 2vw;
     border-radius: 5px;
 }
 
