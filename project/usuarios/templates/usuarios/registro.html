@@ -21,7 +21,11 @@
             <input type="number" name="dni" placeholder="DNI">
             <input type="email" name="email" placeholder="Correo Electrónico">
             <input type="tel" name="telefono" placeholder="Teléfono">
-            <input type="file" name="foto">
+            <fieldset>
+                <legend>Foto de Perfil</legend>
+                <input type="file" name="foto">
+            </fieldset>
+
 
             <button type="submit" class="verde">Registrarse</button>
             {% if error %}

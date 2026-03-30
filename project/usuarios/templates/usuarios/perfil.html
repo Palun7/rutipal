@@ -21,7 +21,7 @@
             {% if usuario.foto %}
                 <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.username }}" class="foto-perfil">
             {% endif %}
-            <a href="{% url 'usuarios:editar-perfil' %}" class="link verde">Editar Datos</a>
+            <a href="{% url 'usuarios:editar-perfil' %}" class="link verde margin-top-2">Editar Datos</a>
         </div>
         <div class="mis-rutinas">
             {% if user.is_alumno %}

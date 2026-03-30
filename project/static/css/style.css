@@ -312,6 +312,14 @@ footer {
     }
 }
 
+.form-registro {
+    fieldset {
+        border: .5px solid var(--negro);
+        border-radius: 5px;
+        padding: 5px;
+    }
+}
+
 .form-rutina {
     display: flex;
     flex-direction: column;
@@ -617,4 +625,8 @@ footer {
     padding: 2px 5px;
     border: .5px solid var(--negro);
     border-radius: 5px;
+}
+
+.margin-top-2 {
+    margin-top: 2vh;
 }

@@ -36,15 +36,19 @@
             <label>Teléfono:<br>
             <input type="tel" name="telefono" value="{{ user.telefono }}"></label>
 
-            <label>Foto actual</label><br>
-            {% if user.foto %}
+            <fieldset>
+                <legend>Foto actual</legend>
+                {% if user.foto %}
                 <img src="{{ user.foto.url }}" class="foto-perfil"><br>
-            {% else %}
+                {% else %}
                 <p>No tienes una foto de perfil.</p><br>
-            {% endif %}
+                {% endif %}
+            </fieldset>
 
-            <label>Nueva foto</label>
-            <input type="file" name="foto">
+            <fieldset>
+                <legend>Nueva foto</legend>
+                <input type="file" name="foto">
+            </fieldset>
 
             <button type="submit" class="link celeste">Guardar cambios</button>
             {% if error %}
