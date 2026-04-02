@@ -14,9 +14,7 @@
     </title>
 </head>
 <body>
-    <header>
-        {% include 'core/components/header.html' %}
-    </header>
+    {% include 'core/components/header.html' %}
     {% block content %}
     {% endblock content %}
     <footer>
@@ -25,5 +23,20 @@
 
     {% block scripts %}
     {% endblock scripts %}
+    <script>
+        const abrir = document.getElementById('abrir');
+        const cerrar = document.getElementById('cerrar');
+
+        abrir.addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.style.display = 'flex';
+        })
+
+        cerrar.addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+
+            sidebar.style.display = 'none';
+        })
+    </script>
 </body>
 </html>
