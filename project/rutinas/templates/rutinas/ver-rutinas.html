@@ -24,10 +24,13 @@
                 {% for rutina in usuario.diarutina_set.all %}
                     <div class="dia-rutina">
                         <div class="dia-editar">
+                            <h3>
+                                {{ rutina.mes }}
+                            </h3><br>
                             <h4>
                                 Día {{ rutina.dia }}:
                             </h4>
-                            <a href="{% url 'rutinas:editar-rutina' rutina.id %}">
+                            <a href="{% url 'rutinas:editar-rutina' rutina.id %}" class="link verde">
                                 Editar
                             </a>
                         </div>

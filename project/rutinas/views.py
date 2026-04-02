@@ -43,27 +43,34 @@ def rutinas(request):
         'rutinas_por_mes': dict(rutinas_por_mes)
     })
 
+from collections import defaultdict
+
 @login_required
 def crear_rutina(request):
-    ejercicios = Ejercicio.objects.all()
     user = request.user
     usuarios = Usuario.objects.all()
+    ejercicios = Ejercicio.objects.all()
+
+    # agrupar ejercicios por músculo
+    ejercicios_por_musculo = defaultdict(list)
+    for e in ejercicios:
+        ejercicios_por_musculo[e.musculo].append(e)
 
     if request.method == 'POST':
 
-        usuario_id = request.POST['usuario']
-        usuario = get_object_or_404(Usuario, id=usuario_id)
-
-        mes = request.POST['mes']
-        dia = request.POST['dia']
+        usuario_id = request.POST.get('usuario')
+        mes = request.POST.get('mes')
+        dia = request.POST.get('dia')
         ejercicio_ids = request.POST.getlist('ejercicio')
 
         if not ejercicio_ids:
             return render(request, 'rutinas/crear-rutina.html', {
                 'error': 'Debes seleccionar al menos un ejercicio',
                 'usuarios': usuarios,
-                'ejercicios': ejercicios
+                'ejercicios_por_musculo': dict(ejercicios_por_musculo)
             })
+
+        usuario = get_object_or_404(Usuario, id=usuario_id)
 
         rutina, creada = DiaRutina.objects.get_or_create(
             usuario=usuario,
@@ -87,7 +94,7 @@ def crear_rutina(request):
     return render(request, 'rutinas/crear-rutina.html', {
         'usuario': user,
         'usuarios': usuarios,
-        'ejercicios': ejercicios
+        'ejercicios_por_musculo': dict(ejercicios_por_musculo)
     })
 
 @login_required
@@ -140,12 +147,13 @@ def actualizar_ejercicio(request):
 
 @login_required
 def rutinas_profesor(request):
-    if request.user != Usuario.objects.filter(tipo_usuario='profesor').first():
+
+    if request.user.tipo_usuario != 'profesor':
         return redirect('rutinas:rutinas')
 
-    usuarios = Usuario.objects.all().prefetch_related(
-        'diarutina_set__ejercicios__ejercicio'
-    )
+    usuarios = Usuario.objects.filter(diarutina__isnull=False)\
+        .distinct()\
+        .prefetch_related('diarutina_set__ejercicios__ejercicio')
 
     return render(request, 'rutinas/ver-rutinas.html', {
         'usuarios': usuarios
@@ -155,7 +163,7 @@ def rutinas_profesor(request):
 def editar_rutina(request, rutina_id):
     rutina = get_object_or_404(DiaRutina, id=rutina_id)
 
-    if request.user != Usuario.objects.filter(tipo_usuario='profesor').first():
+    if request.user.tipo_usuario != 'profesor':
         return redirect('rutinas:rutinas')
 
     if request.method == "POST" and 'agregar' in request.POST:
@@ -193,8 +201,7 @@ def editar_rutina(request, rutina_id):
 def eliminar_rutina(request, rutina_id):
     rutina = get_object_or_404(DiaRutina, id=rutina_id)
 
-    if request.user != Usuario.objects.filter(tipo_usuario='profesor').first():
-
+    if request.user.tipo_usuario != 'profesor':
         return redirect('rutinas:rutinas')
 
     if request.method == "POST":
@@ -204,8 +211,7 @@ def eliminar_rutina(request, rutina_id):
 
 @login_required
 def eliminar_ejercicio(request, ejercicio_id):
-    if request.user != Usuario.objects.filter(tipo_usuario='profesor').first():
-
+    if request.user.tipo_usuario != 'profesor':
         return JsonResponse({'error': 'No autorizado'}, status=403)
 
     if request.method == "POST":

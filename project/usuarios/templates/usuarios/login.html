@@ -15,13 +15,13 @@
             <input type="text" name="username" placeholder="Usuario">
             <input type="password" name="password" placeholder="Contraseña">
 
-            <button type="submit" class="link celeste">Iniciar Sesión</button>
+            <button type="submit" class="link celeste boton-login shadow-celeste">Iniciar Sesión</button>
             {% if error %}
                 <p style="color:red;">{{ error }}</p>
             {% endif %}
         </form>
 
 
-        <a href="{% url 'usuarios:registro' %}" class="link verde">Crear cuenta</a>
+        <a href="{% url 'usuarios:registro' %}" class="link verde margin-top-2">Crear cuenta</a>
     </main>
 {% endblock content %}

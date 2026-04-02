@@ -27,12 +27,12 @@
             </fieldset>
 
 
-            <button type="submit" class="verde">Registrarse</button>
+            <button type="submit" class="link verde boton-login shadow-verde">Registrarse</button>
             {% if error %}
                 <p style="color:red;">{{ error }}</p>
             {% endif %}
         </form>
-        <a href="{% url 'usuarios:login' %}" class="link">Ya tengo cuenta</a> 
+        <a href="{% url 'usuarios:login' %}" class="link celeste margin-top-2">Ya tengo cuenta</a> 
     </main>
 {% endblock content %}
 

@@ -16,12 +16,16 @@
                 {% for mes, rutinas in rutinas_por_mes.items %}
 
                     <div class="mes-rutina">
-                        <h2 class="toggle-mes" data-id="mes-{{ forloop.counter }}">{{ mes }}</h2>
+                        <h2 class="toggle-mes" data-id="mes-{{ forloop.counter }}">{{ mes }}
+                            <img src="{% static 'img/chevron_right.png' %}" alt="chevron" class="chevron">
+                        </h2>
 
                         <div id="mes-{{ forloop.counter }}" class="contenido-mes" style="display: none;">
                             {% for rutina in rutinas %}
                                 <div class="dia-rutina">
-                                    <h3 class="toggle-dia" data-id="dia-{{ rutina.id }}">Día {{ rutina.dia }}:</h3>
+                                    <h3 class="toggle-dia" data-id="dia-{{ rutina.id }}">Día {{ rutina.dia }}:
+                                        <img src="{% static 'img/chevron_right.png' %}" alt="chevron" class="chevron2">
+                                    </h3>
 
                                     <div id="dia-{{ rutina.id }}" class="contenido-dia" style="display: none;">
                                         <ul>
@@ -85,66 +89,97 @@
         {% endif %}
     </main>
     <script>
-    function getCSRFToken() {
-        return document.querySelector('[name=csrfmiddlewaretoken]').value;
-    }
+        function getCSRFToken() {
+            return document.querySelector('[name=csrfmiddlewaretoken]').value;
+        }
 
-    document.querySelectorAll('.auto-save').forEach(input => {
-        input.addEventListener('change', function() {
+        document.querySelectorAll('.auto-save').forEach(input => {
+            input.addEventListener('change', function() {
 
-            const id = this.dataset.id;
-            const field = this.dataset.field;
-            const value = this.value;
+                const id = this.dataset.id;
+                const field = this.dataset.field;
+                const value = this.value;
 
-            fetch("{% url 'rutinas:actualizar_ejercicio' %}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCSRFToken()
-                },
-                body: JSON.stringify({
-                    id: id,
-                    field: field,
-                    value: value
+                fetch("{% url 'rutinas:actualizar_ejercicio' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCSRFToken()
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                        field: field,
+                        value: value
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Guardado:", data);
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Guardado:", data);
+                });
             });
         });
-    });
 
-    document.querySelectorAll('.toggle-ejercicio').forEach(nombre => {
-        nombre.addEventListener('click', function() {
-            const id = this.dataset.id;
-            const detalle = document.getElementById(id);
+        document.querySelectorAll('.toggle-ejercicio').forEach(nombre => {
+            nombre.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const detalle = document.getElementById(id);
 
-            if (detalle.style.display === "none") {
-                detalle.style.display = "flex";
-            } else {
-                detalle.style.display = "none";
-            }
+                if (detalle.style.display === "none") {
+                    detalle.style.display = "flex";
+                } else {
+                    detalle.style.display = "none";
+                }
+            });
         });
-    });
-    document.querySelectorAll('.toggle-mes').forEach(mes => {
-        mes.addEventListener('click', function() {
-            const id = this.dataset.id;
-            const contenido = document.getElementById(id);
+        document.querySelectorAll('.toggle-mes').forEach(mes => {
+            mes.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const contenido = document.getElementById(id);
+                const chevron = this.querySelector('.chevron');
 
-            contenido.style.display = 
-                contenido.style.display === "none" ? "flex" : "none";
+                document.querySelectorAll('.contenido-mes').forEach(div => {
+                    if (div.id !== id) {
+                        div.style.display = "none";
+                    }
+                });
+
+                document.querySelectorAll('.toggle-mes .chevron').forEach(c => {
+                    if (c !== chevron) {
+                        c.classList.remove('rotar');
+                    }
+                });
+
+                const abierto = contenido.style.display === "flex";
+
+                contenido.style.display = abierto ? "none" : "flex";
+                chevron.classList.toggle('rotar', !abierto);
+            });
         });
-    });
 
-    document.querySelectorAll('.toggle-dia').forEach(dia => {
-        dia.addEventListener('click', function() {
-            const id = this.dataset.id;
-            const contenido = document.getElementById(id);
+        document.querySelectorAll('.toggle-dia').forEach(dia => {
+            dia.addEventListener('click', function() {
 
-            contenido.style.display = 
-                contenido.style.display === "none" ? "flex" : "none";
+                const id = this.dataset.id;
+                const contenido = document.getElementById(id);
+                const chevron = this.querySelector('.chevron2');
+
+                document.querySelectorAll('.contenido-dia').forEach(div => {
+                    if (div.id !== id) {
+                        div.style.display = "none";
+                    }
+                });
+
+                document.querySelectorAll('.toggle-dia .chevron2').forEach(c => {
+                    if (c !== chevron) {
+                        c.classList.remove('rotar');
+                    }
+                });
+
+                const abierto = contenido.style.display === "flex";
+
+                contenido.style.display = abierto ? "none" : "flex";
+                chevron.classList.toggle('rotar', !abierto);
+            });
         });
-    });
     </script>
 {% endblock content %}

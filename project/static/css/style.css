@@ -249,6 +249,10 @@ header {
     transition-duration: .2s;
 }
 
+.boton-login {
+    transform: scale(1.5);
+}
+
 .rojo:hover {
     color: var(--rojo);
     box-shadow: 0 0 5px var(--rojo);
@@ -350,6 +354,45 @@ footer {
         transition-duration: .2s;
         cursor: pointer;
     }
+    h3 {
+        text-decoration: underline;
+    }
+    select {
+        padding: 2px 5px;
+        border-radius: 5px;
+        background-color: var(--gris-claro);
+        border: .5px solid var(--negro)
+    }
+}
+
+.bloque-musculo {
+    text-align: center;
+    width: fit-content;
+    background-color: var(--gris);
+    padding: 4px;
+    border-radius: 5px;
+    border: .5px solid var(--negro);
+    box-shadow: 0 0 3px var(--azul-oscuro);
+    h4 {
+        text-decoration: underline;
+        font-size: 1.3em;
+    }
+}
+
+.bloque-musculo:hover {
+    cursor: pointer;
+}
+
+.contenido-musculo {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+    margin-top: 20px;
+    width: 95vw;
+}
+
+.imagen-ejercicio {
+    width: 50px;
 }
 
 .form-rutina-muestra {
@@ -456,6 +499,11 @@ footer {
 }
 
 .form-ejercicios {
+    margin-top: 5px;
+    border: .5px solid var(--gris-oscuro);
+    border-radius: 5px;
+    width: fit-content;
+    padding: 2px 10px;
     input {
         margin: 5px 0;
         border: .5px solid var(--negro);
@@ -474,6 +522,9 @@ footer {
     display: flex;
     gap: 10px;
     align-items: center;
+    input[type="checkbox"] {
+        transform: scale(1.5);
+    }
 }
 
 .foto-perfil {
@@ -591,7 +642,12 @@ footer {
 
 .toggle-ejercicio:hover, .toggle-mes:hover, .toggle-dia:hover {
     cursor: pointer;
-    color: var(--azul);
+    color: var(--azul-oscuro);
+}
+
+.toggle-dia {
+    display: flex;
+    align-items: center;
 }
 
 .toggle-usuario {
@@ -613,6 +669,12 @@ footer {
 .toggle-usuario:hover {
     cursor: pointer;
     background-color: var(--gris-claro);
+}
+
+.toggle-musculo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .detalle-ejercicio {
@@ -639,8 +701,33 @@ footer {
 .foto-usuario {
     width: 2vw;
     border-radius: 5px;
+    @media (max-width: 500px) {
+        width: 50px;
+    }
+}
+
+.chevron {
+    margin-left: 10px;
+    transition-duration: .5s;
+}
+
+.chevron2 {
+    margin-left: 10px;
+    transition-duration: .5s;
 }
 
 .margin-top-2 {
     margin-top: 2vh;
+}
+
+.shadow-verde {
+    box-shadow: 0 0 3px var(--verde) !important;
+}
+
+.shadow-celeste {
+    box-shadow: 0 0 3px var(--celeste) !important;
+}
+
+.rotar {
+    rotate: 90deg;
 }

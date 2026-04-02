@@ -1,6 +1,10 @@
 {% extends 'core/components/base.html' %}
 {% load static %}
 
+{% block link %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock link %}
+
 {% block title %}
     Crear Rutina
 {% endblock title %}
@@ -25,22 +29,37 @@
 
                 <h3>Ejercicios</h3>
 
-                {% for ejercicio in ejercicios %}
-                    <div class="form-ejercicios">
+                {% for musculo, ejercicios in ejercicios_por_musculo.items %}
 
-                        <!-- checkbox para seleccionar -->
-                        <div class="ejercicio-checkbox">
-                            <input type="checkbox" name="ejercicio" value="{{ ejercicio.id }}">
+                    <div class="bloque-musculo">
 
-                            <strong>{{ ejercicio.nombre }} ({{ ejercicio.musculo }})</strong>
+                        <h4 class="toggle-musculo" data-id="musculo-{{ forloop.counter }}">
+                            {{ musculo }}
+                            <img src="{% static 'img/chevron_right.png' %}" alt="chevron" class="chevron">
+                        </h4>
+
+                        <div id="musculo-{{ forloop.counter }}" class="contenido-musculo" style="display:none;">
+
+                            {% for ejercicio in ejercicios %}
+                                <div class="form-ejercicios">
+
+                                    <div class="ejercicio-checkbox">
+                                        <input type="checkbox" name="ejercicio" value="{{ ejercicio.id }}">
+                                        <strong>{{ ejercicio.nombre }}</strong>
+                                    </div>
+                                    {% if ejercicio.imagen %}
+                                        <img src="{{ ejercicio.imagen.url }}" alt="Imagen del ejercicio" class="imagen-ejercicio">
+                                    {% endif %}
+                                    <input type="number" name="reps_{{ ejercicio.id }}" placeholder="Reps">
+                                    <input type="number" name="series_{{ ejercicio.id }}" placeholder="Series">
+                                    <input type="number" name="peso_{{ ejercicio.id }}" placeholder="Peso">
+
+                                </div>
+                            {% endfor %}
+
                         </div>
-
-                        <!-- inputs asociados a ese ejercicio -->
-                        <input type="number" name="reps_{{ ejercicio.id }}" placeholder="Reps">
-                        <input type="number" name="series_{{ ejercicio.id }}" placeholder="Series">
-                        <input type="number" name="peso_{{ ejercicio.id }}" placeholder="Peso">
-
                     </div>
+
                 {% endfor %}
 
                 <button type="submit" class="link verde">Crear Rutina</button>
@@ -49,6 +68,42 @@
                     <p style="color:red;">{{ error }}</p>
                 {% endif %}
             </form>
-            <button class="link rojo" onclick="window.history.back();">Volver</button>
+            <button class="link rojo margin-top-2" onclick="window.history.back();">Volver</button>
     </main>
 {% endblock content %}
+
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#usuario-select').select2({
+                placeholder: "Buscar alumno...",
+                allowClear: true
+            });
+        });
+        document.querySelectorAll('.toggle-musculo').forEach(musculo => {
+            musculo.addEventListener('click', function() {
+
+                const id = this.dataset.id;
+                const div = document.getElementById(id);
+                const chevron = this.querySelector('.chevron');
+
+                // cerrar otros
+                document.querySelectorAll('.contenido-musculo').forEach(c => {
+                    if (c.id !== id) c.style.display = "none";
+                });
+
+                // resetear chevrons
+                document.querySelectorAll('.toggle-musculo .chevron').forEach(c => {
+                    if (c !== chevron) c.classList.remove('rotar');
+                });
+
+                const abierto = div.style.display === "grid";
+
+                div.style.display = abierto ? "none" : "grid";
+                chevron.classList.toggle('rotar', !abierto);
+            });
+        });
+    </script>
+{% endblock scripts %}
