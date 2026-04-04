@@ -6,22 +6,22 @@
             {%if user.is_alumno%}
                 <li><a class="link {% if request.resolver_match.url_name == 'rutinas' %}active-full{% endif %}" href="{% url 'rutinas:rutinas' %}">Mi Rutina</a></li>
                 {% if user.foto %}
-                    <div class="foto-nav {% if request.resolver_match.url_name == 'perfil' %}active-foto-full{% endif %}">
+                    <div class="foto-nav {% if request.resolver_match.url_name == 'perfil' or request.resolver_match.url_name == 'ver-registros' or request.resolver_match.url_name == 'cargar-registro' %}active-foto-full{% endif %}">
                         <a href="{% url 'usuarios:perfil' %}" title="Perfil"><img src="{{ user.foto.url }}"></a>
                     </div>
                 {% else %}
-                    <li><a class="link {% if request.resolver_match.url_name == 'perfil' %}active-full{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
+                    <li><a class="link {% if request.resolver_match.url_name == 'perfil' or request.resolver_match.url_name == 'ver-registros' or request.resolver_match.url_name == 'cargar-registro' %}active-full{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
                 {% endif %}
                 <li><a class="link rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
                 {% elif user.is_profesor %}
                 <li><a class="link {% if request.resolver_match.url_name == 'centro-rutinas' or  request.resolver_match.url_name == 'cargar-ejercicio' or request.resolver_match.url_name == 'crear-rutina' or request.resolver_match.url_name == 'editar-rutina' or request.resolver_match.url_name == 'ver-rutinas'%}active-full{% endif %}" href="{% url 'rutinas:centro-rutinas' %}">Profe</a></li>
                 <li><a href="{% url 'rutinas:rutinas' %}" class="link celeste {% if request.resolver_match.url_name == 'rutinas' %}active-full{% endif %}">Mi Rutina</a></li>
                 {% if user.foto %}
-                    <div class="foto-nav {% if request.resolver_match.url_name == 'perfil' %}active-foto-full{% endif %}">
+                    <div class="foto-nav {% if request.resolver_match.url_name == 'perfil' or request.resolver_match.url_name == 'ver-registros' or request.resolver_match.url_name == 'cargar-registro' %}active-foto-full{% endif %}">
                         <a href="{% url 'usuarios:perfil' %}" title="Perfil"><img src="{{ user.foto.url }}"></a>
                     </div>
                 {% else %}
-                    <li><a class="link {% if request.resolver_match.url_name == 'perfil' %}active-full{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
+                    <li><a class="link {% if request.resolver_match.url_name == 'perfil' or request.resolver_match.url_name == 'ver-registros' or request.resolver_match.url_name == 'cargar-registro' %}active-full{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
                 {% endif %}
                 <li><a class="link rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
             {% else %}
@@ -37,11 +37,11 @@
         <li class="boton-cerrar"><img src="{% static 'img/close.png' %}" alt="cerrar" id="cerrar"></li>
         {% if user.is_alumno or user.is_profesor %}
             {% if user.foto %}
-                <div class="foto-nav {% if request.resolver_match.url_name == 'perfil' %}active-foto{% endif %}">
+                <div class="foto-nav {% if request.resolver_match.url_name == 'perfil' or request.resolver_match.url_name == 'ver-registros' or request.resolver_match.url_name == 'cargar-registro' %}active-foto{% endif %}">
                     <a href="{% url 'usuarios:perfil' %}" title="Perfil"><img src="{{ user.foto.url }}"></a>
                 </div>
             {% else %}
-                <li><a class="link {% if request.resolver_match.url_name == 'perfil' %}active{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
+                <li><a class="link {% if request.resolver_match.url_name == 'perfil' or request.resolver_match.url_name == 'ver-registros' or request.resolver_match.url_name == 'cargar-registro' %}active{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
             {% endif %}
         {% endif %}
         <li><a class="link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'core:index' %}">Inicio</a></li>

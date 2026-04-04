@@ -1,0 +1,82 @@
+{% extends 'core/components/base.html' %}
+{% load static %}
+
+{% block link %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock link %}
+
+{% block title %}
+    Cargar Registro
+{% endblock title %}
+
+{% block content %}
+    <main class="main-registro">
+        <h2>Nuevo Registro de {{ user.username }}</h2>
+        <form method="post" class="form-registro" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <p class="fecha">Hoy es: {% now "d/m/Y" %}</p>
+            <span><input type="number" name="peso" step="0.1" placeholder="Peso en kg."> kg.</span>
+
+            <div id="medidas-container">
+
+                <div class="medida-item">
+                    <input type="text" name="medida_nombre[]" placeholder="Ej: cintura">
+
+                    <input type="number" step="0.1" name="medida_valor[]" placeholder="Valor">
+
+                    <select name="medida_unidad[]">
+                        <option value="cm">cm</option>
+                        <option value="m">m</option>
+                        <option value="kg">kg</option>
+                        <option value="mm">mm</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button type="button" id="agregar-medida">+ Agregar medida</button>
+
+            <fieldset>
+                <legend>Foto de referencia</legend>
+                <input type="file" name="foto">
+            </fieldset>
+
+            <textarea name="comentario" placeholder="Comentario..."></textarea>
+
+            <button type="submit" class="link verde">Cargar Registro</button>
+        </form>
+    </main>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+       document.getElementById('agregar-medida').addEventListener('click', function() {
+
+            const container = document.getElementById('medidas-container');
+
+            const nueva = document.createElement('div');
+            nueva.classList.add('medida-item');
+
+            nueva.innerHTML = `
+                <input type="text" name="medida_nombre[]" placeholder="Ej: cintura">
+                <input type="number" step="0.1" name="medida_valor[]" placeholder="Valor">
+                <select name="medida_unidad[]">
+                    <option value="cm">cm</option>
+                    <option value="m">m</option>
+                    <option value="kg">kg</option>
+                    <option value="mm">mm</option>
+                </select>
+                <button type="button" class="eliminar-medida">🗑️ Eliminar medida</button>
+            `;
+
+            container.appendChild(nueva);
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('eliminar-medida')) {
+                e.target.parentElement.remove();
+            }
+        });
+    </script>
+{% endblock scripts %}

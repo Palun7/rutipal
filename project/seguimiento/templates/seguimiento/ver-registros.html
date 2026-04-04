@@ -1,0 +1,54 @@
+{% extends 'core/components/base.html' %}
+{% load static %}
+
+{% block title %}
+    Ver Registros
+{% endblock title %}
+
+{% block content %}
+    <main class="main-registros">
+        <h2>Tus registros</h2>
+        <div class="registros-contenedor">
+            {% for registro in registros %}
+                <div class="registro-vista">
+                    <h4 class="fecha-vista">{{ registro.fecha }}</h4>
+
+                    <h4>Peso:</h4>
+                    {% if registro.peso %}
+                        <p>{{ registro.peso }} kg.</p>
+                    {% else %}
+                        <p>No se registró peso.</p>
+                    {% endif %}
+
+                    <h4>Medidas:</h4>
+                    {% if registro.medidas_registro.all %}
+                        <ul>
+                            {% for medida in registro.medidas_registro.all %}
+                                <li>
+                                    - {{ medida.nombre }}: {{ medida.valor }} {{ medida.unidad }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No se registraron medidas.</p>
+                    {% endif %}
+
+                    <h4>Foto:</h4>
+                    {% if registro.foto %}
+                        <a href="{{ registro.foto.url }}"><img src="{{ registro.foto.url}}" alt="Foto de {{ registro.fecha }}"></a>
+                        <small><p>*Click pantalla completa*</p></small>
+                    {% else %}
+                        <p>No se agregó foto.</p>
+                    {% endif %}
+
+                    <h4>Comentario:</h4>
+                    {% if registro.comentario %}
+                        <textarea disabled>{{ registro.comentario }}</textarea>
+                    {% else %}
+                        <p>No hay comentario.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock content %}

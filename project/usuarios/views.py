@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .models import Usuario
 from rutinas.models import DiaRutina
+from seguimiento.models import Registro
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import update_session_auth_hash
@@ -66,7 +67,8 @@ def logout_view(request):
 @login_required
 def perfil_view(request):
     rutinas = DiaRutina.objects.filter(usuario=request.user).order_by('mes', 'dia')
-    return render(request, 'usuarios/perfil.html', {'usuario': request.user, 'rutinas': rutinas})
+    registros = Registro.objects.filter(usuario=request.user).order_by('fecha')
+    return render(request, 'usuarios/perfil.html', {'usuario': request.user, 'rutinas': rutinas, 'registros': registros})
 
 @login_required
 def editar_perfil(request):

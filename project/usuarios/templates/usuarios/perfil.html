@@ -22,6 +22,7 @@
                 <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.username }}" class="foto-perfil">
             {% endif %}
             <a href="{% url 'usuarios:editar-perfil' %}" class="link verde margin-top-2">Editar Datos</a>
+            <a href="{% url 'seguimiento:cargar-registro' %}" class="link verde margin-top-2">Cargar Registo</a>
         </div>
         <div class="mis-rutinas">
             {% if user.is_alumno %}
@@ -35,6 +36,13 @@
                 {% else %}
                     <p>No tienes rutinas asignadas.</p>
                 {% endif %}
+                <h3 class="h3-profesor margin-top-4">Seguimiento</h3>
+                {% if registros %}
+                    <a href="{% url 'seguimiento:ver-registros' %}" class="link celeste">Ver seguimiento</a>
+                {% else %}
+                    <p>No tienes registros cargados.</p>
+                {% endif %}
+
             {% elif user.is_profesor %}
                 <h3 class="h3-profesor">Centro de Rutinas</h3>
                 <div class="links-rutinas">
@@ -42,7 +50,16 @@
                     <a href="{% url 'rutinas:crear-rutina' %}" class="link verde">Crear Rutina</a>
                     <a href="{% url 'rutinas:ver-rutinas' %}" class="link celeste">Ver rutinas</a>
                     <a href="{% url 'rutinas:rutinas' %}" class="link celeste">Mi Rutina</a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'admin:index' %}" class="link celeste">Admin</a>
+                    {% endif %}
                 </div>
+                <h3 class="h3-profesor margin-top-4">Seguimiento</h3>
+                {% if registros %}
+                    <a href="{% url 'seguimiento:ver-registros' %}" class="link celeste margin-top-2">Ver seguimiento</a>
+                {% else %}
+                    <p>No tienes registros cargados.</p>
+                {% endif %}
             {% endif %}
         </div>
     </main>
