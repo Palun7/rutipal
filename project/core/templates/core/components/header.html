@@ -12,7 +12,7 @@
                 {% else %}
                     <li><a class="link {% if request.resolver_match.url_name == 'perfil' or request.resolver_match.url_name == 'ver-registros' or request.resolver_match.url_name == 'cargar-registro' %}active-full{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
                 {% endif %}
-                <li><a class="link rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
+                <li><a class="link-cerrar rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
                 {% elif user.is_profesor %}
                 <li><a class="link {% if request.resolver_match.url_name == 'centro-rutinas' or  request.resolver_match.url_name == 'cargar-ejercicio' or request.resolver_match.url_name == 'crear-rutina' or request.resolver_match.url_name == 'editar-rutina' or request.resolver_match.url_name == 'ver-rutinas'%}active-full{% endif %}" href="{% url 'rutinas:centro-rutinas' %}">Profe</a></li>
                 <li><a href="{% url 'rutinas:rutinas' %}" class="link celeste {% if request.resolver_match.url_name == 'rutinas' %}active-full{% endif %}">Mi Rutina</a></li>
@@ -23,7 +23,7 @@
                 {% else %}
                     <li><a class="link {% if request.resolver_match.url_name == 'perfil' or request.resolver_match.url_name == 'ver-registros' or request.resolver_match.url_name == 'cargar-registro' %}active-full{% endif %}" href="{% url 'usuarios:perfil' %}">Perfil</a></li>
                 {% endif %}
-                <li><a class="link rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
+                <li><a class="link-cerrar rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
             {% else %}
                 <li><a class="link {% if request.resolver_match.url_name == 'login' %}active-full{% endif %}" href="{% url 'usuarios:login' %}">Iniciar Sesión</a></li>
                 <li><a class="link verde {% if request.resolver_match.url_name == 'registro' %}active-full{% endif %}" href="{% url 'usuarios:registro' %}">Crear Cuenta</a></li>
@@ -47,11 +47,11 @@
         <li><a class="link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'core:index' %}">Inicio</a></li>
         {%if user.is_alumno%}
             <li><a class="link {% if request.resolver_match.url_name == 'rutinas' %}active{% endif %}" href="{% url 'rutinas:rutinas' %}">Mi Rutina</a></li>
-            <li><a class="link rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
+            <li><a class="link-cerrar rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
             {% elif user.is_profesor %}
             <li><a class="link {% if request.resolver_match.url_name == 'centro-rutinas' or  request.resolver_match.url_name == 'cargar-ejercicio' or request.resolver_match.url_name == 'crear-rutina' or request.resolver_match.url_name == 'editar-rutina' or request.resolver_match.url_name == 'ver-rutinas'%}active{% endif %}" href="{% url 'rutinas:centro-rutinas' %}">Profe</a></li>
             <li><a href="{% url 'rutinas:rutinas' %}" class="link celeste {% if request.resolver_match.url_name == 'rutinas' %}active{% endif %}">Mi Rutina</a></li>
-            <li><a class="link rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
+            <li><a class="link-cerrar rojo" href="{% url 'usuarios:logout' %}">Cerrar Sesión</a></li>
         {% else %}
             <li><a class="link {% if request.resolver_match.url_name == 'login' %}active{% endif %}" href="{% url 'usuarios:login' %}">Iniciar Sesión</a></li>
             <li><a class="link verde {% if request.resolver_match.url_name == 'registro' %}active{% endif %}" href="{% url 'usuarios:registro' %}">Crear Cuenta</a></li>
