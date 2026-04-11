@@ -835,8 +835,19 @@ footer {
 }
 
 .toggle-ejercicio, .toggle-mes, .toggle-dia {
-    text-decoration: underline;
+    /* text-decoration: underline; */
     transition-duration: .3s;
+}
+
+.toggle-ejercicio {
+    margin-bottom: 10px;
+    font-size: 1.3em;
+    font-weight: bold;
+    small {
+        font-weight: lighter;
+        font-size: .5em;
+        text-align: center;
+    }
 }
 
 .toggle-ejercicio:hover, .toggle-mes:hover, .toggle-dia:hover {

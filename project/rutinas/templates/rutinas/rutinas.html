@@ -31,9 +31,9 @@
                                         <ul>
                                             {% for r in rutina.ejercicios.all %}
                                                 <li class="ejercicio-completo">
-                                                    <strong class="toggle-ejercicio" data-id="ej-{{ r.id }}">
-                                                        {{ r.ejercicio.nombre }}:
-                                                    </strong><br>
+                                                    <p class="toggle-ejercicio" data-id="ej-{{ r.id }}">
+                                                        {{ r.ejercicio.nombre }}: <small>Ver ejercicio</small>
+                                                    </p>
                                                     <div id="ej-{{ r.id }}" class="detalle-ejercicio" style="display: none;">
                                                         <p><strong>Músculo:</strong> {{ r.ejercicio.musculo }}</p>
                                                         <p><strong>Descripción:</strong> {{ r.ejercicio.descripcion }}</p>
