@@ -623,7 +623,13 @@ footer {
 }
 
 .contenido-dia {
-    width: 70vw;
+    align-self: center;
+    width: 85vw;
+    ul {
+        li {
+            list-style: none;
+        }
+    }
 }
 
 .li-ver-rutina {
@@ -760,9 +766,9 @@ footer {
 }
 
 .mes-rutina {
-    background-color: var(--gris);
+    background-color: var(--gris-transparente);
     min-width: 80%;
-    max-width: fit-content;
+    max-width: 98vw;
     display: flex;
     flex-direction: column;
     padding: 30px;
