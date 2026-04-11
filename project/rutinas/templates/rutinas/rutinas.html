@@ -42,8 +42,17 @@
                                                             <img src="{{ r.ejercicio.imagen.url }}" width="150">
                                                         {% endif %}
 
-                                                        {% if r.ejercicio.url %}
-                                                            <p><a href="{{ r.ejercicio.url }}" target="_blank" class="link celeste">Ver ejemplo</a></p>
+                                                        {% if r.ejercicio.get_embed_url %}
+                                                            <iframe 
+                                                                width="300" 
+                                                                height="170" 
+                                                                src="{{ r.ejercicio.get_embed_url }}" 
+                                                                title="YouTube video player"
+                                                                frameborder="0"
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                                referrerpolicy="strict-origin-when-cross-origin"
+                                                                allowfullscreen>
+                                                            </iframe>
                                                         {% endif %}
                                                     </div>
 

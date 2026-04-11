@@ -1,4 +1,6 @@
 from django.db import models
+from urllib.parse import urlparse, parse_qs
+
 
 class Ejercicio(models.Model):
     nombre = models.CharField(max_length=100)
@@ -6,6 +8,9 @@ class Ejercicio(models.Model):
     descripcion = models.TextField()
     imagen = models.ImageField(upload_to='ejercicios/', blank=True, null=True)
     url = models.URLField(blank=True, null=True)
+
+    def get_embed_url(self):
+        return get_youtube_embed_url(self.url)
 
     class Meta:
         unique_together = ('nombre', 'musculo')
@@ -44,3 +49,29 @@ class RutinaEjercicio(models.Model):
 
     def __str__(self):
         return f"{self.rutina.usuario.username} - {self.rutina.mes}/{self.rutina.dia} - {self.ejercicio.nombre}"
+
+def get_youtube_embed_url(url):
+
+    if not url:
+        return None
+
+    parsed = urlparse(url)
+
+    # youtube.com/watch?v=
+    if "youtube.com" in parsed.netloc:
+        if parsed.path == "/watch":
+            video_id = parse_qs(parsed.query).get("v", [None])[0]
+            if video_id:
+                return f"https://www.youtube.com/embed/{video_id}"
+
+        # shorts
+        if "/shorts/" in parsed.path:
+            video_id = parsed.path.split("/shorts/")[1].split("?")[0]
+            return f"https://www.youtube.com/embed/{video_id}"
+
+    # youtu.be
+    if "youtu.be" in parsed.netloc:
+        video_id = parsed.path.strip("/").split("?")[0]
+        return f"https://www.youtube.com/embed/{video_id}"
+
+    return None
